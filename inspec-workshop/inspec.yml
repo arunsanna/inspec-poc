@@ -1,8 +1,0 @@
-name: inspec-workshop
-title: InSpec Profile
-maintainer: Arun Sanna
-copyright: Arun Sanna
-copyright_email: sanna.arunchowdary@gmail.com
-license: Apache-2.0
-summary: An InSpec Compliance Profile
-version: 0.1.0

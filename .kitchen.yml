@@ -1,0 +1,52 @@
+driver:
+  name: ec2
+  region: <%= ENV['AWS_REGION'] %>
+  subnet_id: <%= ENV['SUBNET_ID'] %>
+  security_group_ids: ["<%= ENV['SG_ID'] %>"]
+  aws_ssh_key_id: <%= ENV['SSH_KEY'] %>
+  iam_profile_name: <%= ENV['IAM_PROFILE'] %>
+  associate_public_ip: <%= ENV['PUBLIC_IP'] %>
+  tags:
+    Owner: <%= ENV['TAGS_OWNER'] %>
+    Environment: <%= ENV['TAGS_ENVIRONMENT'] %>
+    Project: <%= ENV['TAGS_PROJECT'] %>
+    Name: <%= ENV['BUILD_NAME'] %>
+    ExpirationDate: "<%= ENV['TAGS_EXPIRY'] %>"
+
+transport:
+  ssh_key: <%= ENV['SSH_KEY_PATH'] %>
+  name: rsync
+  connection_timeout: 60
+  connection_retried: 8
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: rhel-6
+    driver:
+      instance_type: t2.large
+      block_device_mappings:
+      - device_name: /dev/sda1
+        ebs:
+          volume_size: 50
+          delete_on_termination: true
+      - device_name: /dev/sdb
+        ebs:
+          volume_size: 50
+          delete_on_termination: true
+      - device_name: /dev/sdc
+        ebs:
+          volume_size: 50
+          delete_on_termination: true
+      image_id: ami-1b05b10d
+      tags:
+        Name: dev-STIG-RHEL-6
+    transport:
+      username: ec2-user
+
+suites:
+  - name: default
+    verifier:
+      inspec_tests:
+        - APP-1

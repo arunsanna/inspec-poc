@@ -6,3 +6,8 @@ copyright_email: you@example.com
 license: Apache-2.0
 summary: An InSpec Compliance Profile
 version: 0.1.0
+
+depends:
+  - name: RHEL6X-STIGS
+    path: /Users/arunsanna/git-repos/rean_projects/inspec-workshop/RHEL6X-STIGS
+
